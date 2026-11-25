@@ -1,0 +1,4 @@
+\babel@toc {french}{}\relax 
+\contentsline {section}{\numberline {0.1}yassine}{3}{section.0.1}%
+\contentsline {section}{\numberline {0.2}seif}{3}{section.0.2}%
+\contentsline {section}{\numberline {0.3}raslen}{3}{section.0.3}%
