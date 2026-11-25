@@ -1,0 +1,81 @@
+\section{Partie 2.c :DiffWave : critère d'apprentissage, latence et mémoire}
+
+\subsection{Principe général}
+
+DiffWave est un modèle génératif fondé sur la diffusion, conçu pour produire des formes d'onde audio. Le processus direct ajoute progressivement du bruit à un signal audio réel jusqu'à obtenir un signal proche d'un bruit gaussien. Le processus inverse apprend à retirer progressivement ce bruit afin de reconstruire un signal audio plausible.
+
+Pendant l'apprentissage, le réseau est entraîné sur des signaux perturbés à différents niveaux de diffusion. Il reçoit le signal bruité et l'indice de l'étape de diffusion, puis apprend à estimer le bruit qui a été ajouté.
+
+\subsection{Critère de coût utilisé pendant l'apprentissage}
+
+Une formulation courante de l'objectif d'apprentissage consiste à minimiser l'erreur quadratique entre le bruit réellement ajouté et le bruit estimé par le réseau :
+\begin{equation}
+\mathcal{L}(\theta)=
+\mathbb{E}_{x_0,\epsilon,t}
+\left[
+\left\|
+\epsilon-\epsilon_\theta(x_t,t)
+\right\|_2^2
+\right],
+\end{equation}
+où :
+\begin{itemize}
+    \item $x_0$ est le signal audio original ;
+    \item $t$ est l'indice de l'étape de diffusion ;
+    \item $\epsilon$ est le bruit gaussien ajouté ;
+    \item $x_t$ est le signal perturbé à l'étape $t$ ;
+    \item $\epsilon_\theta(x_t,t)$ est le bruit prédit par le réseau paramétré par $\theta$.
+\end{itemize}
+
+Le réseau cherche à produire une estimation du bruit aussi proche que possible du bruit réellement injecté. En apprenant à estimer ce bruit à différents niveaux de perturbation, il apprend indirectement à effectuer le processus inverse de diffusion.
+
+L'article original de DiffWave présente un cadre probabiliste de diffusion et un objectif d'apprentissage lié à la borne variationnelle. La prédiction du bruit avec une erreur quadratique est une formulation pratique couramment utilisée pour entraîner ce type de modèle. Cette fonction de coût ne mesure pas directement la qualité audio finale : elle mesure l'écart entre le bruit réel et le bruit estimé pendant l'apprentissage.
+
+\subsection{Latence et temps de génération}
+
+La latence désigne le temps nécessaire pour générer le signal audio. Dans un modèle de diffusion, la génération nécessite plusieurs étapes successives du processus inverse. À chaque étape, le réseau estime le bruit et permet de produire un signal progressivement plus structuré.
+
+Le temps de génération dépend principalement :
+\begin{itemize}
+    \item du nombre d'étapes de diffusion utilisées pendant l'inférence ;
+    \item de la longueur du signal audio à générer ;
+    \item de la taille et de la complexité du réseau ;
+    \item du matériel utilisé, notamment du processeur ou du GPU ;
+    \item de l'optimisation logicielle et de la précision numérique.
+\end{itemize}
+
+DiffWave est non autorégressif : il n'a pas besoin de prédire chaque échantillon audio en s'appuyant séquentiellement sur les échantillons précédents, comme le font les modèles autorégressifs classiques. Les opérations sur les positions temporelles d'une étape peuvent être réalisées en parallèle. En revanche, les étapes successives du processus inverse de diffusion restent dépendantes les unes des autres.
+
+Augmenter le nombre d'étapes de diffusion peut améliorer la qualité de la génération, mais augmente généralement le temps de calcul. Il existe donc un compromis entre qualité audio et latence. Une valeur précise doit être mesurée sur une machine et avec une configuration données ; aucune mesure locale n'est avancée dans ce rapport.
+
+\subsection{Consommation mémoire}
+
+La consommation mémoire correspond à la quantité de mémoire vive ou de mémoire GPU nécessaire au chargement et à l'exécution du modèle. Elle dépend notamment :
+\begin{itemize}
+    \item du nombre de paramètres du réseau ;
+    \item du nombre de canaux et de blocs internes de l'architecture ;
+    \item de la longueur des séquences audio traitées ;
+    \item de la taille du lot (\textit{batch size}) ;
+    \item de la précision numérique utilisée ;
+    \item du mode d'exécution : apprentissage ou inférence.
+\end{itemize}
+
+Pendant l'apprentissage, la consommation mémoire est généralement plus importante, car il faut conserver les activations intermédiaires nécessaires à la rétropropagation du gradient, en plus des paramètres et des états de l'optimiseur.
+
+Pendant l'inférence, le calcul du gradient n'est pas nécessaire. La mémoire requise est donc généralement plus faible, même si elle reste influencée par la taille du modèle et la longueur audio générée.
+
+Il faut distinguer la taille du fichier contenant les poids pré-entraînés de la mémoire réellement utilisée à l'exécution. Le chargement du modèle, les activations intermédiaires, les tampons de calcul et les données audio peuvent nécessiter davantage de mémoire que le seul fichier des poids.
+
+\subsection{Synthèse de l'étude de DiffWave}
+
+Le critère d'apprentissage de DiffWave vise à rapprocher le bruit prédit par le réseau du bruit réellement ajouté au signal. La latence dépend notamment du nombre d'étapes de diffusion, de la longueur audio et du matériel disponible. La mémoire dépend de l'architecture, des dimensions des données et du mode d'exécution.
+
+Ces trois critères sont liés : une configuration plus coûteuse en calcul ou en mémoire peut permettre une génération de meilleure qualité, mais elle peut aussi augmenter les ressources nécessaires. L'évaluation pratique d'un modèle DiffWave doit donc considérer simultanément la qualité audio, le temps de génération et la consommation mémoire.
+
+\section*{Conclusion de la partie}
+\addcontentsline{toc}{section}{Conclusion de la partie de Yassine}
+
+La première étude a permis de construire les motifs des deux classes à partir de la matrice de convolution et d'observer l'influence du bruit gaussien sur leur séparation. Les figures montrent que l'augmentation de la variance entraîne une dispersion plus importante des observations et complique progressivement la classification.
+
+L'étude de DiffWave a permis de comprendre le rôle du critère de prédiction du bruit pendant l'apprentissage, ainsi que les principaux facteurs qui influencent la latence et la consommation mémoire du modèle.
+

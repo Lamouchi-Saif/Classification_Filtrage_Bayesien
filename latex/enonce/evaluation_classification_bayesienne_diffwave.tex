@@ -1,0 +1,306 @@
+\documentclass[11pt,a4paper]{article}
+
+% Encodage et langue
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+
+% Mise en page et mathématiques
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={Évaluation TP -- Classification et filtrage bayésien},
+    pdfauthor={RT4 -- INSAT}
+}
+
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{leftmargin=1.5em,itemsep=0.35em}
+\setlist[enumerate]{leftmargin=1.8em,itemsep=0.6em}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\CC}{\mathbf{CC}}
+\newcommand{\D}{\mathbf{D}}
+\newcommand{\xv}{\mathbf{x}}
+\newcommand{\wv}{\mathbf{w}}
+\newcommand{\cv}{\mathbf{c}}
+\newcommand{\rv}{\mathbf{r}}
+
+\begin{document}
+
+\begin{center}
+    {\Large\bfseries Évaluation TP : Classification et filtrage bayésien}\\[0.35em]
+    {\large RT4 -- INSAT}\\
+    Responsable : R. Amara
+\end{center}
+
+\vspace{0.5em}
+\hrule
+\vspace{0.8em}
+
+Dans le cours de classification bayésienne, on a pu déterminer l'estimateur
+MAP (\textit{Maximum A Posteriori}) du signal de référence $d(n)$,
+connaissant le vecteur $\xv(n)$ (le régresseur), pour l'application de
+déconvolution pour laquelle
+\[
+    d(n)\in\{-1,+1\}.
+\]
+
+L'observation est donnée par
+\[
+    x(n)=\CC * D_M(n)+v(n), \qquad n\in\{1,\ldots,N\},
+\]
+où $v(n)$ est un bruit blanc gaussien :
+\[
+    v(n)\sim\mathcal{N}(0,\sigma_v^2).
+\]
+En développant la convolution,
+\[
+    x(n)
+    =\sum_{i=0}^{M-1}c(i)d(n-i)+v(n)
+    =CC^{T} D_M(n)+v(n).
+\]
+
+Ainsi, le vecteur régresseur est
+\[
+    \xv(n)=
+    \begin{bmatrix}
+        x(n)\\
+        x(n-1)\\
+        \vdots\\
+        x(n-P+1)
+    \end{bmatrix}.
+\]
+
+La matrice de convolution $\CC$ est la matrice circulante donnée par
+\[
+\CC=
+\begin{bmatrix}
+c(0) & \cdots & c(M-1) & 0 & \cdots & 0\\
+0 & c(0) & \cdots & c(M-1) & \cdots & 0\\
+\vdots & \ddots & \ddots & & \ddots & \vdots\\
+0 & \cdots & 0 & c(0) & \cdots & c(M-1)
+\end{bmatrix}.
+\]
+
+$\D_M(n)$ est le vecteur régresseur construit à partir des symboles, tel que
+\[
+    \D_M(n)=
+    \begin{bmatrix}
+        d(n) & d(n-1) & \cdots & d(n-P-M+2)
+    \end{bmatrix}^{T}.
+\]
+
+\section{Classification bayésienne}
+
+\begin{enumerate}[label=\arabic*.]
+
+\item \textbf{Affichage des deux classes auxquelles appartiennent les observations.}
+
+Afficher les deux classes auxquelles appartiennent $\xv(n)$ et relatives à
+$d(n)=+1$ et à $d(n)=-1$, pour $M=2$ et $P=2$.
+
+\begin{itemize}
+    \item Pour $c(0)=1$ et $c(1)=0.5$, déterminer la matrice $\CC$,
+    les vecteurs non bruités $\xv(n)$, à savoir
+    \[
+        \xv_i^{+}=\CC\,\D_i^{+},
+        \qquad
+        \xv_i^{-}=\CC\,\D_i^{-},
+    \]
+    avec $\D_i^{+}$ les valeurs prises par $\D_M(n)$ lorsque $d(n)=+1$,
+    et $\D_i^{-}$ les valeurs prises par $\D_M(n)$ lorsque $d(n)=-1$.
+
+    L'implémentation à réaliser doit accepter n'importe quelle valeur pour
+    les coefficients $\cv$. Le paramètre $M$ est la longueur du vecteur
+    $\cv$. La valeur de $P$ sera fixée au début du code, ainsi que le nombre
+    d'échantillons à traiter $N$.
+
+    Les motifs de la classe $\mathcal{E}^{+}$ seront représentés par
+    le symbole « + » et ceux de $\mathcal{E}^{-}$ par le symbole « o ».
+
+    \item Après avoir affiché les motifs qui représentent les données
+    non bruitées de $\mathcal{E}^{+}$ et $\mathcal{E}^{-}$, superposer
+    les valeurs prises par $\xv(n)$ en présence de bruit avec le motif
+    « * », avec une autre couleur. Vous pouvez tester des valeurs de
+    $\sigma_v^2$ pour lesquelles les classes sont linéairement séparables
+    ou non.
+
+    \item Implémenter le calcul du vecteur de probabilités
+    \[
+        \mathbf{P}(n)=
+        \begin{bmatrix}
+            P_{+}(n)\\
+            P_{-}(n)
+        \end{bmatrix},
+    \]
+    avec $P_{+}(n)$ et $P_{-}(n)$ les probabilités que $\xv(n)$
+    appartienne respectivement à $\mathcal{E}^{+}$ et $\mathcal{E}^{-}$.
+    On rappellera les expressions de $P_{+}(n)$ et $P_{-}(n)$.
+
+    \item Déterminer le taux d'erreur binaire (TEB), qui est le même que
+    le taux d'erreur de classification pour
+    \[
+        \mathrm{TEB}=\frac{\text{nombre d'erreurs}}{N},
+    \]
+    où
+    \[
+        \mathrm{erreur}(n)=
+        \begin{cases}
+            1, & \text{si } \widehat d_{\mathrm{MAP}}(n)\neq d(n),\\
+            0, & \text{sinon}.
+        \end{cases}
+    \]
+    L'estimateur MAP est défini par
+    \[
+        \widehat d_{\mathrm{MAP}}(n)=
+        \begin{cases}
+            +1, & \text{si }P_{+}(n)>P_{-}(n),\\
+            -1, & \text{si }P_{+}(n)<P_{-}(n).
+        \end{cases}
+    \]
+
+    \item Afficher la frontière de décision (\textit{decision boundary})
+    \[
+        \partial\mathcal{E}
+        =
+        \left\{
+        \xv\in\text{espace de }\xv(n)
+        \;\middle|\;
+        P_{+}(\xv)=P_{-}(\xv)
+        \right\}.
+    \]
+    Il faudra discrétiser l'espace de $\xv(n)$ (autour des classes
+    $\mathcal{E}^{+}$ et $\mathcal{E}^{-}$) et afficher l'ensemble des
+    points $\xv$ pour lesquels
+    \[
+        \left|P_{+}(\xv)-P_{-}(\xv)\right|<\varepsilon.
+    \]
+    À cause de la précision numérique, on ne pourra pas avoir
+    $P_{+}=P_{-}$ exactement ; il faut donc régler adéquatement
+    $\varepsilon$.
+
+    \item Implémenter de même les coefficients du filtre de Wiener
+    $\wv_{\mathrm{opt}}$ (tels que cela a été fait en cours/TP), puis
+    afficher l'hyperplan de Wiener séparateur des deux classes
+    $\mathcal{E}^{+}$ et $\mathcal{E}^{-}$, défini par
+    \[
+        H_{\mathrm{Wiener}}^{\mathrm{HP}}
+        =
+        \left\{
+        \xv\;\middle|\;
+        \wv_{\mathrm{opt}}^{T}\xv=0
+        \right\}.
+    \]
+    Interpréter l'optimalité du filtre de Wiener et celle du classifieur
+    bayésien implémenté, en faisant varier $\sigma_v^2$.
+
+    \item Pour une valeur de $\sigma_v^2$ assurant la séparabilité
+    linéaire de $\mathcal{E}^{+}$ et $\mathcal{E}^{-}$, proposer une
+    méthode afin de trouver un meilleur hyperplan séparateur que celui
+    de Wiener. Implémenter votre méthode et comparer les TEB.
+    Il est préférable que la méthode soit issue de votre propre réflexion.
+    Un essai de quantification du degré de séparabilité linéaire des deux
+    classes peut être envisagé (penser à voir le problème géométriquement).
+
+    \item Changer la valeur de $\cv$ et observer de même la disposition
+    des classes, le degré de séparabilité linéaire et celui obtenu par
+    classification bayésienne. On pourra présenter le TEB en fonction
+    du RSB (rapport signal à bruit) défini par rapport à $\xv(n)$ par
+    \[
+        \mathrm{RSB}
+        =
+        10\log_{10}
+        \left(
+        \frac{\cv^{T}\mathbf{R}_{d}\cv}{\sigma_v^2}
+        \right).
+    \]
+    Pour le classifieur bayésien, le filtre de Wiener mis en œuvre pour
+    la déconvolution, ainsi que le filtre implémentant le nouvel
+    hyperplan séparateur que vous avez proposé, seront également étudiés.
+
+    Pour le choix de $\cv$, montrer en dimension $M=3$ (filtre
+    convolutionnel à 3 coefficients : $c(0)$, $c(1)$ et $c(2)$).
+
+    Pour $M>3$, utiliser un outil de visualisation de dimension tel que
+    le t-SNE afin d'afficher les éléments des classes.
+\end{itemize}
+
+\end{enumerate}
+
+\section{Étude de l'architecture DNN : DiffWave}
+
+\begin{enumerate}[label=\alph*.]
+
+\item \textbf{Identification de l'architecture DiffWave et de ses applications.}
+
+Identifier l'architecture DiffWave et les applications pour lesquelles
+elle est dédiée. Pour chaque application, indiquer ce qui constitue
+l'entrée et la sortie de l'architecture DiffWave.
+
+Expliquer le principe de l'approche d'apprentissage de DiffWave en
+utilisant des illustrations et des équations. Qu'entend-on par les
+opérations de diffusion et de conditionnement ?
+
+Quelles sont les différences avec les vocodeurs tels que WaveNet ?
+
+\item \textbf{Présentation de l'architecture.}
+
+Présenter l'architecture avec ses différents modules. Chaque module est
+à détailler (structure, entrée/sortie, rôle).
+
+Accorder une attention particulière au bloc résiduel à base de
+convolution dilatée.
+
+\item \textbf{Critère de coût et ressources.}
+
+Quel est le critère ou la fonction coût utilisée pour l'apprentissage ?
+S'instruire à propos de la latence et du « memory usage » de DiffWave.
+
+\item \textbf{Identification de versions pré-entraînées et évaluation.}
+
+Identifier quelques versions pré-entraînées de DiffWave que vous pouvez
+tester (donner les sources et les dépôts).
+
+Prévoir le test d'un exemple de modèle DiffWave pré-entraîné, sur un
+dataset (ou une partie d'un dataset) de votre choix. On montrera la
+performance du modèle pour l'application choisie (speech enhancement,
+denoising, séparation de sources, etc.) en termes d'indicateurs adéquats.
+
+Vous pouvez toujours construire votre propre scénario de test. Par exemple :
+\begin{itemize}
+    \item Bruiter un dataset de signaux audio (issus d'enregistrements
+    que vous avez réalisés), puis appliquer DiffWave pour les débruiter.
+    \item Envisager d'utiliser DiffWave pour résoudre un problème de type
+    \textit{cocktail party}, afin d'améliorer la qualité d'un signal audio
+    noyé dans une ambiance sonore particulière (ambiance d'une zone
+    urbaine, gare, etc.). Commencer donc par créer le mélange de signaux
+    audio.
+\end{itemize}
+
+\item \textbf{Proposition d'un cas d'utilisation (\textit{use case}).}
+
+Proposer un \textit{use case} de DiffWave afin de générer des signaux de
+parole qui pourront être prononcés par un malentendant. Vous commencerez
+par décrire votre démarche afin d'implémenter un tel module en détaillant
+les étapes.
+
+\end{enumerate}
+
+\vspace{1em}
+\begin{center}
+    \textit{La compréhension du modèle DNN DiffWave et de son fonctionnement
+    sera fortement valorisée.}
+\end{center}
+
+\end{document}
