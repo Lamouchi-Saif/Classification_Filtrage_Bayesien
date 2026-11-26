@@ -1,12 +1,19 @@
 \babel@toc {french}{}\relax 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Représentation des motifs des classes $E^+$ et $E^-$ sans bruit.}}{7}{figure.caption.6}%
-\contentsline {figure}{\numberline {1.2}{\ignorespaces Observations bruitées pour une variance $\sigma ^2=0.01$.}}{8}{figure.caption.7}%
-\contentsline {figure}{\numberline {1.3}{\ignorespaces Observations bruitées pour une variance $\sigma ^2=0.2$.}}{9}{figure.caption.8}%
-\contentsline {figure}{\numberline {1.4}{\ignorespaces Observations bruitées pour une variance $\sigma ^2=1.0$.}}{10}{figure.caption.9}%
-\contentsline {figure}{\numberline {1.5}{\ignorespaces Comparaison des observations pour les trois niveaux de bruit étudiés.}}{11}{figure.caption.10}%
-\contentsline {figure}{\numberline {1.6}{\ignorespaces Représentation des deux classes et des observations bruitées dans le plan d'observation.}}{20}{figure.caption.19}%
-\contentsline {figure}{\numberline {1.7}{\ignorespaces Frontière de décision bayésienne et points proches de l'égalité des probabilités a posteriori.}}{25}{figure.caption.24}%
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Représentation des motifs des classes $E^+$ et $E^-$ sans bruit.}}{8}{figure.caption.6}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Observations bruitées pour une variance $\sigma ^2=0.01$.}}{9}{figure.caption.7}%
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Observations bruitées pour une variance $\sigma ^2=0.2$.}}{10}{figure.caption.8}%
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Observations bruitées pour une variance $\sigma ^2=1.0$.}}{11}{figure.caption.9}%
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Comparaison des observations pour les trois niveaux de bruit étudiés.}}{12}{figure.caption.10}%
+\contentsline {figure}{\numberline {1.6}{\ignorespaces Représentation des deux classes et des observations bruitées dans le plan d'observation.}}{21}{figure.caption.19}%
+\contentsline {figure}{\numberline {1.7}{\ignorespaces Frontière de décision bayésienne et points proches de l'égalité des probabilités a posteriori.}}{26}{figure.caption.24}%
+\contentsline {figure}{\numberline {1.8}{\ignorespaces Frontière de Bayes (vert), hyperplan de Wiener (magenta, tirets) et hyperplan à marge maximale (cyan, section~\ref {sec:sep}) pour $\sigma _v^2=0{,}01$, $0{,}2$ et $1$. Les classes sont linéairement séparables dans les trois cas (les motifs sont séparables ; c'est le bruit qui crée le recouvrement).}}{28}{figure.caption.29}%
+\contentsline {figure}{\numberline {1.9}{\ignorespaces Enveloppes convexes de $\mathcal S^+$ et $\mathcal S^-$, point $\underline x^\star $, centres de support, hyperplan à marge maximale (bandes de marge en pointillés) et hyperplan de Wiener ($\sigma _v^2=0{,}2$).}}{30}{figure.caption.35}%
+\contentsline {figure}{\numberline {1.10}{\ignorespaces TEB en fonction du RSB ($\underline c=[1,0.5]^T$, $P=2$). Pointillés : TEB théorique des règles linéaires. Les points à TEB nul sur $10^5$ essais ne sont pas tracés.}}{32}{figure.caption.40}%
+\contentsline {figure}{\numberline {1.11}{\ignorespaces Gauche : $\underline c=[1,0.5]^T$ (séparable). Droite : $\underline c=[0.5,1]^T$ : $c(0)<c(1)$, les enveloppes convexes se recouvrent, aucun hyperplan ne sépare les classes, même sans bruit ; la frontière de Bayes devient fortement non linéaire.}}{33}{figure.caption.44}%
+\contentsline {figure}{\numberline {1.12}{\ignorespaces $M=P=3$, $\sigma _v^2=0{,}05$ : nuages bruités, motifs, plan de Wiener (magenta) et plan à marge maximale (cyan).}}{34}{figure.caption.46}%
+\contentsline {figure}{\numberline {1.13}{\ignorespaces Projection t-SNE ($P=5$, RSB $=10$~dB).}}{35}{figure.caption.47}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Architecture du réseau de neurones DiffWave. Source : Kong et al., \textit {DiffWave: A Versatile Diffusion Model for Audio Synthesis}, ICLR 2021, Figure 2.}}{28}{figure.caption.25}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Processus direct de diffusion et processus inverse de reconstruction dans un modèle de diffusion. Source : Kong et al., \textit {DiffWave: A Versatile Diffusion Model for Audio Synthesis}, ICLR 2021, Figure 1.}}{33}{figure.caption.33}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Architecture du réseau de neurones DiffWave. Source : Kong et al., \textit {DiffWave: A Versatile Diffusion Model for Audio Synthesis}, ICLR 2021, Figure 2.}}{37}{figure.caption.49}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Processus direct de diffusion et processus inverse de reconstruction dans un modèle de diffusion. Source : Kong et al., \textit {DiffWave: A Versatile Diffusion Model for Audio Synthesis}, ICLR 2021, Figure 1.}}{42}{figure.caption.57}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Vue d'ensemble de DiffWave (BASE : $C=64$, $N=30$, cycle de dilatation $m=10$).}}{45}{figure.caption.62}%

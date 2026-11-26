@@ -1,0 +1,26 @@
+%---------------------------------------------------------------------
+\subsection{(d) Modèles pré-entraînés et test}
+%---------------------------------------------------------------------
+\paragraph{Versions pré-entraînées identifiées.}
+\begin{itemize}
+ \item \texttt{lmnt-com/diffwave} (PyTorch) : implémentation de référence « communautaire », vocodeur conditionné par mel (LJ Speech, 22,05~kHz), mode d'échantillonnage rapide (\texttt{fast\_sampling}), \texttt{pip install diffwave}. \url{https://github.com/lmnt-com/diffwave}
+ \item \texttt{philsyn/DiffWave-Vocoder} et \texttt{philsyn/DiffWave-unconditional} (PyTorch) : vocodeur LJ Speech et génération inconditionnelle (SC09). \url{https://github.com/philsyn/DiffWave-Vocoder}, \url{https://github.com/philsyn/DiffWave-unconditional}
+ \item \texttt{revsic/tf-diffwave} (TensorFlow). \url{https://github.com/revsic/tf-diffwave}
+ \item Pour le \emph{débruitage de parole}, \texttt{neillu23/CDiffuSE} (variante conditionnée par le signal bruité, architecture dérivée de DiffWave, VoiceBank-DEMAND). \url{https://github.com/neillu23/CDiffuSE}
+\end{itemize}
+
+\paragraph{Scénario de test retenu.} Les modèles pré-entraînés de DiffWave sont des \emph{vocodeurs} : l'entrée est un mel-spectrogramme. Le scénario le plus fidèle à leur usage est donc la \emph{copy-synthesis} sur parole propre (enregistrements personnels ou extrait de LJ Speech) : $\text{wav}\to\text{mel}\to\text{DiffWave}\to\widehat{\text{wav}}$, comparé au signal d'origine. On compare en outre 50 pas et 6 pas, et on montre la \emph{limite} du vocodeur : alimenté par le mel d'un signal bruité, il ne débruite pas (il reproduit fidèlement le bruit), d'où l'intérêt de variantes conditionnées par le signal bruité (CDiffuSE) pour le « speech enhancement ». Le script \texttt{python/diffwave\_test.py} réalise ces tests et calcule : STOI, PESQ (large bande, 16~kHz), SI-SDR, distance log-spectrale (LSD), latence, RTF et mémoire de pointe.
+
+\begin{table}[H]\centering\small
+\begin{tabular}{lcccccc}\toprule
+Condition & STOI & PESQ$_{wb}$ & SI-SDR (dB) & LSD (dB) & RTF & Mém.\ (Mio)\\\midrule
+copy-synthesis, 50 pas & \multicolumn{6}{c}{\emph{à compléter après exécution}}\\
+copy-synthesis, 6 pas  & \multicolumn{6}{c}{\emph{à compléter}}\\
+mel bruité 20 dB $\to$ DiffWave & \multicolumn{6}{c}{\emph{à compléter}}\\
+mel bruité 10 dB $\to$ DiffWave & \multicolumn{6}{c}{\emph{à compléter}}\\
+mel bruité 0 dB $\to$ DiffWave & \multicolumn{6}{c}{\emph{à compléter}}\\\bottomrule
+\end{tabular}
+\caption{Résultats du test (je n'ai pas pu télécharger les poids ni exécuter le modèle depuis mon environnement : à remplir avec \texttt{resultats.json}). Attendu : bonne intelligibilité (STOI élevé) en copy-synthesis ; SI-SDR faible même si la qualité perçue est bonne, car un vocodeur ne reproduit pas la phase d'origine ; pas d'amélioration STOI/PESQ pour les entrées bruitées.}
+\end{table}
+
+\paragraph{Remarque sur SI-SDR.} Les vocodeurs neuronaux ne préservent pas la phase du signal original ; SI-SDR (basé sur la forme d'onde) est donc volontairement pessimiste, tandis que STOI, PESQ et LSD (basés sur le spectre) reflètent mieux la qualité perçue. On écoutera aussi les fichiers produits.

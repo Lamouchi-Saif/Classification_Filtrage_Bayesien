@@ -1,0 +1,39 @@
+\subsection{(b) Modules de l'architecture}
+%---------------------------------------------------------------------
+\begin{figure}[H]\centering
+\begin{tikzpicture}[node distance=7mm,
+ b/.style={draw,rounded corners,minimum height=8mm,minimum width=2.6cm,align=center,font=\footnotesize,fill=blue!6},
+ c/.style={draw,rounded corners,minimum height=8mm,align=center,font=\footnotesize,fill=orange!10},
+ ar/.style={-{Latex[length=2mm]}}]
+ \node[b] (in) {$x_t\in\mathbb R^{1\times L}$};
+ \node[b,right=of in] (c1) {Conv $1{\times}1$ $(1\!\to\!C)$\\+ ReLU};
+ \node[b,right=of c1,minimum width=3.4cm] (res) {$N$ couches résiduelles\\(dilatations $2^{\,l\bmod m}$)};
+ \node[b,right=of res] (out) {$\sum$ skip $/\sqrt N$\\Conv $1{\times}1$+ReLU\\Conv $1{\times}1$ $(C\!\to\!1)$};
+ \node[b,right=of out,minimum width=1.6cm] (eps) {$\hat\epsilon_\theta$};
+ \node[c,below=10mm of c1] (emb) {Embedding de $t$\\sinus (128) $\to$ FC 512 $\to$ swish\\$\to$ FC 512 $\to$ swish};
+ \node[c,below=10mm of res,xshift=18mm] (mel) {Conditionneur\\mel $(80\times T_{mel})$ $\to$ 2 ConvTransp.\ 2D\\$\to$ $(80\times L)$ ; Conv $1{\times}1$/couche};
+ \draw[ar] (in)--(c1);\draw[ar] (c1)--(res);\draw[ar] (res)--(out);\draw[ar] (out)--(eps);
+ \draw[ar] (emb)-|(res.south west);\draw[ar] (mel)--(res.south);
+\end{tikzpicture}
+\caption{Vue d'ensemble de DiffWave (BASE : $C=64$, $N=30$, cycle de dilatation $m=10$).}
+\end{figure}
+
+\begin{center}\small
+\begin{tabular}{p{3.1cm}p{4.2cm}p{3.1cm}p{3.6cm}}\toprule
+Module & Structure & Entrée $\to$ sortie & Rôle\\\midrule
+Projection d'entrée & Conv1D $1{\times}1$ + ReLU & $(1,L)\to(C,L)$ & passage à $C$ canaux\\
+Embedding de $t$ & encodage sinusoïdal (dim.\ 128) puis 2 couches FC (512) + swish ; une FC par couche résiduelle projette 512$\to C$ & $t\to\mathbb R^{C}$ par couche & indique le niveau de bruit courant\\
+Conditionneur & 2 convolutions transposées 2D (suréchantillonnage $\times256$ pour un hop de 256) ; Conv $1{\times}1$ $80\to2C$ par couche & $(80,T_{mel})\to(2C,L)$ & aligne le mel sur la forme d'onde et l'injecte\\
+\textbf{Bloc résiduel} (répété $N$ fois) & voir ci-dessous & $(C,L)\to(C,L)$ + skip $(C,L)$ & extraction progressive des caractéristiques sur un grand champ réceptif\\
+Sortie & somme des skips $/\sqrt N$, Conv $1{\times}1$ + ReLU, Conv $1{\times}1$ $(C\to1)$ initialisée à zéro & $(C,L)\to(1,L)$ & estimation $\hat\epsilon_\theta$ du bruit\\\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Bloc résiduel à convolution dilatée (détail).} Pour la couche $l$, de dilatation $d_l=2^{\,l\bmod m}$ :
+\begin{enumerate}
+ \item $h=x+\mathrm{FC}_l(\text{emb}(t))$ : on ajoute le plongement de $t$ (diffusé sur tout l'axe temporel) ;
+ \item $z=\mathrm{Conv1D}_{k=3,\,d=d_l}(h)+\mathrm{Conv}_{1\times1}(\text{mel suréchantillonné})\in\mathbb R^{2C\times L}$, convolution \emph{non causale} (remplissage symétrique) ;
+ \item unité à porte (gated) : $g=\tanh(z_{[1:C]})\odot\sigma(z_{[C+1:2C]})$ ;
+ \item $\mathrm{Conv}_{1\times1}(g)\in\mathbb R^{2C\times L}$ coupé en deux : $r$ (connexion résiduelle) et $s$ (skip) ; sortie du bloc $(x+r)/\sqrt2$, skip $s$.
+\end{enumerate}
+La dilatation double à chaque couche ($1,2,4,\dots,2^{m-1}$, puis on recommence), ce qui fait croître le champ réceptif de façon exponentielle avec un coût linéaire : pour $m=10$, $N=30$ et $k=3$, il vaut $1+2\cdot3\cdot(2^{10}-1)=6139$ échantillons, soit environ $0{,}28$~s à 22,05~kHz. La normalisation $1/\sqrt2$ et $1/\sqrt N$ stabilise la variance des activations. Les variantes publiées sont BASE ($N=30$, $C=64$, $T=50$, $\beta_t$ linéaire de $10^{-4}$ à $0{,}05$, environ $2{,}6$~M de paramètres) et LARGE ($N=36$, $C=256$, environ $6{,}9$~M de paramètres).

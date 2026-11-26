@@ -1,0 +1,15 @@
+%---------------------------------------------------------------------
+\subsection{(e) Cas d'usage : parole de personnes malentendantes}
+%---------------------------------------------------------------------
+\paragraph{Objectif.} Générer des signaux de parole tels que prononcés par une personne malentendante (prosodie atypique, hauteur instable, nasalisation, articulation imprécise, qualité de voix modifiée), p.\,ex.\ pour (i) \emph{augmenter les données} d'apprentissage de systèmes de reconnaissance vocale pour cette population, très peu représentée dans les corpus, (ii) fournir des exemples contrôlés pour la formation d'orthophonistes ou d'outils de rééducation.
+
+\paragraph{Démarche proposée.} DiffWave étant un \emph{vocodeur}, il ne produit pas à lui seul le contenu linguistique ni le style ; on l'insère dans une chaîne :
+\begin{enumerate}
+ \item \textbf{Données et éthique.} Corpus de parole de locuteurs malentendants (enregistrements existants ou collecte avec consentement éclairé, anonymisation, accord d'un comité d'éthique) ; transcriptions alignées ; annotation du degré de surdité/intelligibilité.
+ \item \textbf{Prétraitement.} Rééchantillonnage, normalisation, suppression des silences, mel-spectrogrammes (80 bandes, hop 256), extraction de $f_0$ et de l'énergie.
+ \item \textbf{Modèle acoustique texte$\to$mel} (FastSpeech\,2 ou Tacotron\,2), pré-entraîné sur parole standard puis \emph{affiné} sur la parole malentendante avec un plongement de style / de degré de sévérité ; alternative : conversion de voix mel$\to$mel (parole standard $\to$ parole malentendante) pour conserver le contenu d'un locuteur donné.
+ \item \textbf{Vocodeur DiffWave conditionné par le mel} (et éventuellement $f_0$), pré-entraîné sur parole standard puis \emph{affiné} sur les enregistrements malentendants (voix soufflée, $f_0$ irrégulière, hors distribution des corpus propres). Entraînement : perte $\mathcal L(\theta)$, ajustement du planning de bruit ; inférence : 6 à 50 pas selon le compromis qualité/latence.
+ \item \textbf{Évaluation.} Objective : MCD, $f_0$-RMSE, LSD, WER/CER d'un ASR (la parole synthétisée doit induire des erreurs comparables à la vraie parole malentendante) ; subjective : MOS de naturalité et test de similarité avec des auditeurs, y compris des personnes concernées.
+ \item \textbf{Garde-fous.} Usage non stigmatisant, étiquetage des signaux synthétiques, pas de clonage de voix sans consentement.
+\end{enumerate}
+\paragraph{Limites.} Peu de données $\Rightarrow$ sur-apprentissage (régularisation, affinage partiel, augmentation), variabilité interlocuteur très forte, absence de métrique objective consensuelle de « fidélité » pour la parole atypique.

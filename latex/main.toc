@@ -1,54 +1,85 @@
 \babel@toc {french}{}\relax 
-\contentsline {chapter}{\numberline {1}Motifs des classes et étude de DiffWave}{5}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Construction des motifs des classes}{5}{section.1.1}%
-\contentsline {subsection}{\numberline {1.1.1}Objectif et modèle du signal}{5}{subsection.1.1.1}%
-\contentsline {subsection}{\numberline {1.1.2}Construction de la matrice de convolution}{6}{subsection.1.1.2}%
-\contentsline {subsection}{\numberline {1.1.3}Détermination des quatre motifs de chaque classe}{6}{subsection.1.1.3}%
-\contentsline {subsection}{\numberline {1.1.4}Résultats en absence de bruit}{7}{subsection.1.1.4}%
-\contentsline {subsection}{\numberline {1.1.5}Modélisation du bruit gaussien}{7}{subsection.1.1.5}%
-\contentsline {subsection}{\numberline {1.1.6}Analyse des résultats avec bruit}{8}{subsection.1.1.6}%
-\contentsline {subsection}{\numberline {1.1.7}Bilan de la partie 1.1}{11}{subsection.1.1.7}%
-\contentsline {section}{\numberline {1.2}Classification bayésienne}{12}{section.1.2}%
-\contentsline {subsection}{\numberline {1.2.1}Calcul des probabilités bayésiennes}{12}{subsection.1.2.1}%
-\contentsline {subsubsection}{Calcul des densités conditionnelles}{13}{section*.11}%
-\contentsline {subsubsection}{Implémentation MATLAB}{13}{section*.12}%
-\contentsline {subsubsection}{Résultats numériques}{14}{section*.13}%
-\contentsline {subsection}{\numberline {1.2.2}Classification par la méthode MAP}{15}{subsection.1.2.2}%
-\contentsline {subsubsection}{Implémentation MATLAB}{15}{section*.14}%
-\contentsline {subsection}{\numberline {1.2.3}Calcul du taux d'erreur binaire (TEB)}{16}{subsection.1.2.3}%
-\contentsline {subsubsection}{Implémentation MATLAB}{16}{section*.15}%
-\contentsline {subsubsection}{Résultats et interprétation}{17}{section*.16}%
-\contentsline {subsection}{\numberline {1.2.4}Affichage des deux classes et des observations bruitées}{17}{subsection.1.2.4}%
-\contentsline {subsubsection}{Code MATLAB}{18}{section*.17}%
-\contentsline {subsubsection}{Résultat graphique}{19}{section*.18}%
-\contentsline {subsection}{\numberline {1.2.5}Visualisation de la frontière de décision bayésienne}{20}{subsection.1.2.5}%
-\contentsline {subsubsection}{Approximation numérique de la frontière}{21}{section*.20}%
-\contentsline {subsubsection}{Code MATLAB}{21}{section*.21}%
-\contentsline {subsubsection}{Affichage de la frontière}{23}{section*.22}%
-\contentsline {subsubsection}{Résultat graphique et interprétation}{24}{section*.23}%
-\contentsline {chapter}{\numberline {2}Étude de l’architecture DNN : DiffWave}{27}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Partie 2.a : Étude de l'architecture DNN DiffWave}{27}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Présentation générale de DiffWave}{27}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Architecture générale du modèle}{27}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}Applications et entrées/sorties du modèle}{29}{subsection.2.1.3}%
-\contentsline {subsubsection}{Neural vocoding conditionné par un spectrogramme Mel}{29}{section*.26}%
-\contentsline {subsubsection}{Génération conditionnelle par classe}{29}{section*.27}%
-\contentsline {subsubsection}{Génération audio inconditionnelle}{30}{section*.28}%
-\contentsline {subsubsection}{Résumé des applications}{30}{section*.29}%
-\contentsline {subsection}{\numberline {2.1.4}Principe des modèles de diffusion}{30}{subsection.2.1.4}%
-\contentsline {subsubsection}{Processus direct : ajout progressif du bruit}{31}{section*.31}%
-\contentsline {subsubsection}{Processus inverse : reconstruction du signal}{31}{section*.32}%
-\contentsline {subsection}{\numberline {2.1.5}Principe d'apprentissage du réseau}{32}{subsection.2.1.5}%
-\contentsline {subsection}{\numberline {2.1.6}Notion de conditionnement dans DiffWave}{34}{subsection.2.1.6}%
-\contentsline {subsubsection}{Conditionnement local}{34}{section*.34}%
-\contentsline {subsubsection}{Conditionnement global}{34}{section*.35}%
-\contentsline {subsubsection}{Génération sans conditionnement}{35}{section*.36}%
-\contentsline {subsection}{\numberline {2.1.7}Différences entre DiffWave et WaveNet}{35}{subsection.2.1.7}%
-\contentsline {subsection}{\numberline {2.1.8}Conclusion}{36}{subsection.2.1.8}%
-\contentsline {section}{\numberline {2.2}Partie 2.c :DiffWave : critère d'apprentissage, latence et mémoire}{36}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Principe général}{36}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Critère de coût utilisé pendant l'apprentissage}{36}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Latence et temps de génération}{37}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Consommation mémoire}{38}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}Synthèse de l'étude de DiffWave}{38}{subsection.2.2.5}%
-\contentsline {section}{Conclusion de la partie de Yassine}{38}{section*.38}%
+\contentsline {chapter}{\numberline {1}Motifs des classes et étude de DiffWave}{6}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Construction des motifs des classes}{6}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Objectif et modèle du signal}{6}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Construction de la matrice de convolution}{7}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Détermination des quatre motifs de chaque classe}{7}{subsection.1.1.3}%
+\contentsline {subsection}{\numberline {1.1.4}Résultats en absence de bruit}{8}{subsection.1.1.4}%
+\contentsline {subsection}{\numberline {1.1.5}Modélisation du bruit gaussien}{8}{subsection.1.1.5}%
+\contentsline {subsection}{\numberline {1.1.6}Analyse des résultats avec bruit}{9}{subsection.1.1.6}%
+\contentsline {subsection}{\numberline {1.1.7}Bilan de la partie 1.1}{12}{subsection.1.1.7}%
+\contentsline {section}{\numberline {1.2}Classification bayésienne}{13}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Calcul des probabilités bayésiennes}{13}{subsection.1.2.1}%
+\contentsline {subsubsection}{Calcul des densités conditionnelles}{14}{section*.11}%
+\contentsline {subsubsection}{Implémentation MATLAB}{14}{section*.12}%
+\contentsline {subsubsection}{Résultats numériques}{15}{section*.13}%
+\contentsline {subsection}{\numberline {1.2.2}Classification par la méthode MAP}{16}{subsection.1.2.2}%
+\contentsline {subsubsection}{Implémentation MATLAB}{16}{section*.14}%
+\contentsline {subsection}{\numberline {1.2.3}Calcul du taux d'erreur binaire (TEB)}{17}{subsection.1.2.3}%
+\contentsline {subsubsection}{Implémentation MATLAB}{17}{section*.15}%
+\contentsline {subsubsection}{Résultats et interprétation}{18}{section*.16}%
+\contentsline {subsection}{\numberline {1.2.4}Affichage des deux classes et des observations bruitées}{18}{subsection.1.2.4}%
+\contentsline {subsubsection}{Code MATLAB}{19}{section*.17}%
+\contentsline {subsubsection}{Résultat graphique}{20}{section*.18}%
+\contentsline {subsection}{\numberline {1.2.5}Visualisation de la frontière de décision bayésienne}{21}{subsection.1.2.5}%
+\contentsline {subsubsection}{Approximation numérique de la frontière}{22}{section*.20}%
+\contentsline {subsubsection}{Code MATLAB}{22}{section*.21}%
+\contentsline {subsubsection}{Affichage de la frontière}{24}{section*.22}%
+\contentsline {subsubsection}{Résultat graphique et interprétation}{25}{section*.23}%
+\contentsline {section}{\numberline {1.3}Partie 1.3 -- Filtre de Wiener et hyperplans séparateurs}{27}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Cadre et notations}{27}{subsection.1.3.1}%
+\contentsline {paragraph}{Propriété de symétrie.}{27}{section*.25}%
+\contentsline {paragraph}{RSB.}{27}{section*.26}%
+\contentsline {subsection}{\numberline {1.3.2}Calcul du filtre de Wiener}{27}{subsection.1.3.2}%
+\contentsline {paragraph}{Comportement limite.}{28}{section*.28}%
+\contentsline {subsection}{\numberline {1.3.3}Hyperplan de Wiener, frontière de Bayes et optimalité}{28}{subsection.1.3.3}%
+\contentsline {paragraph}{Interprétation (optimalité).}{29}{section*.30}%
+\contentsline {subsection}{\numberline {1.3.4}Un meilleur hyperplan séparateur}{29}{subsection.1.3.4}%
+\contentsline {paragraph}{Séparabilité linéaire et géométrie.}{29}{section*.31}%
+\contentsline {paragraph}{Degré de séparabilité.}{29}{section*.32}%
+\contentsline {paragraph}{Méthode proposée (hyperplan à marge maximale par enveloppe convexe).}{29}{section*.33}%
+\contentsline {paragraph}{Exemple traité à la main ($\underline c=[1,0.5]^T$, $P=2$).}{30}{section*.34}%
+\contentsline {paragraph}{Critère alternatif : hyperplan de TEB minimal.}{30}{section*.36}%
+\contentsline {paragraph}{Comparaison.}{31}{table.caption.38}%
+\contentsline {paragraph}{Lecture honnête du résultat.}{31}{section*.39}%
+\contentsline {subsection}{\numberline {1.3.5}RSB et taux d'erreur binaire}{31}{subsection.1.3.5}%
+\contentsline {paragraph}{Interprétation.}{32}{section*.42}%
+\contentsline {subsection}{\numberline {1.3.6}Influence du canal $\underline c$}{33}{subsection.1.3.6}%
+\contentsline {paragraph}{Observations.}{33}{section*.45}%
+\contentsline {subsection}{\numberline {1.3.7}Montée en dimension : $M=3$ puis $M>3$}{34}{subsection.1.3.7}%
+\contentsline {chapter}{\numberline {2}Étude de l’architecture DNN : DiffWave}{36}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Partie 2.a : Étude de l'architecture DNN DiffWave}{36}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Présentation générale de DiffWave}{36}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Architecture générale du modèle}{36}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Applications et entrées/sorties du modèle}{38}{subsection.2.1.3}%
+\contentsline {subsubsection}{Neural vocoding conditionné par un spectrogramme Mel}{38}{section*.50}%
+\contentsline {subsubsection}{Génération conditionnelle par classe}{38}{section*.51}%
+\contentsline {subsubsection}{Génération audio inconditionnelle}{39}{section*.52}%
+\contentsline {subsubsection}{Résumé des applications}{39}{section*.53}%
+\contentsline {subsection}{\numberline {2.1.4}Principe des modèles de diffusion}{39}{subsection.2.1.4}%
+\contentsline {subsubsection}{Processus direct : ajout progressif du bruit}{40}{section*.55}%
+\contentsline {subsubsection}{Processus inverse : reconstruction du signal}{40}{section*.56}%
+\contentsline {subsection}{\numberline {2.1.5}Principe d'apprentissage du réseau}{41}{subsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.1.6}Notion de conditionnement dans DiffWave}{43}{subsection.2.1.6}%
+\contentsline {subsubsection}{Conditionnement local}{43}{section*.58}%
+\contentsline {subsubsection}{Conditionnement global}{43}{section*.59}%
+\contentsline {subsubsection}{Génération sans conditionnement}{44}{section*.60}%
+\contentsline {subsection}{\numberline {2.1.7}Différences entre DiffWave et WaveNet}{44}{subsection.2.1.7}%
+\contentsline {subsection}{\numberline {2.1.8}Conclusion}{45}{subsection.2.1.8}%
+\contentsline {subsection}{\numberline {2.1.9}(b) Modules de l'architecture}{45}{subsection.2.1.9}%
+\contentsline {paragraph}{Bloc résiduel à convolution dilatée (détail).}{46}{section*.63}%
+\contentsline {section}{\numberline {2.2}Partie 2.c :DiffWave : critère d'apprentissage, latence et mémoire}{47}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Principe général}{47}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Critère de coût utilisé pendant l'apprentissage}{47}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Latence et temps de génération}{48}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Consommation mémoire}{48}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}Synthèse de l'étude de DiffWave}{49}{subsection.2.2.5}%
+\contentsline {section}{Conclusion de la partie de Yassine}{49}{section*.64}%
+\contentsline {subsection}{\numberline {2.2.6}(d) Modèles pré-entraînés et test}{49}{subsection.2.2.6}%
+\contentsline {paragraph}{Versions pré-entraînées identifiées.}{49}{section*.65}%
+\contentsline {paragraph}{Scénario de test retenu.}{50}{section*.66}%
+\contentsline {paragraph}{Remarque sur SI-SDR.}{50}{section*.68}%
+\contentsline {subsection}{\numberline {2.2.7}(e) Cas d'usage : parole de personnes malentendantes}{50}{subsection.2.2.7}%
+\contentsline {paragraph}{Objectif.}{50}{section*.69}%
+\contentsline {paragraph}{Démarche proposée.}{51}{section*.70}%
+\contentsline {paragraph}{Limites.}{51}{section*.71}%

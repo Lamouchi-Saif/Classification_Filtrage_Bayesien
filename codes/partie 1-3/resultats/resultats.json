@@ -1,0 +1,75 @@
+{
+  "device": "cpu",
+  "params_M": 2.619971,
+  "duree_s": 7.9970068027210885,
+  "runs": [
+    {
+      "SI-SDR_dB": -44.5087682853447,
+      "LSD_dB": 11.421660953324581,
+      "STOI": null,
+      "PESQ_wb": null,
+      "scenario": "copy-synthesis, standard (50 pas)",
+      "latence_s": 445.8165146000101,
+      "RTF": 55.74792239120205,
+      "memoire_MiB": 1122.1875
+    },
+    {
+      "SI-SDR_dB": -25.41804272671291,
+      "LSD_dB": 11.346994809950603,
+      "STOI": null,
+      "PESQ_wb": null,
+      "scenario": "copy-synthesis, rapide (6 pas)",
+      "latence_s": 52.92828719998943,
+      "RTF": 6.618512214092386,
+      "memoire_MiB": 1162.43359375
+    },
+    {
+      "scenario": "mel bruite SNR=20 dB -> DiffWave",
+      "sortie_vs_propre": {
+        "SI-SDR_dB": -43.59831318793874,
+        "LSD_dB": 15.29823371003057,
+        "STOI": null,
+        "PESQ_wb": null
+      },
+      "entree_bruitee_vs_propre": {
+        "SI-SDR_dB": 20.001408701939578,
+        "LSD_dB": 23.962015123580752,
+        "STOI": null,
+        "PESQ_wb": null
+      },
+      "RTF": 46.64038003232659
+    },
+    {
+      "scenario": "mel bruite SNR=10 dB -> DiffWave",
+      "sortie_vs_propre": {
+        "SI-SDR_dB": -31.593856178137823,
+        "LSD_dB": 24.221369441777743,
+        "STOI": null,
+        "PESQ_wb": null
+      },
+      "entree_bruitee_vs_propre": {
+        "SI-SDR_dB": 9.994959317636685,
+        "LSD_dB": 32.58248074161877,
+        "STOI": null,
+        "PESQ_wb": null
+      },
+      "RTF": 47.73192769701253
+    },
+    {
+      "scenario": "mel bruite SNR=0 dB -> DiffWave",
+      "sortie_vs_propre": {
+        "SI-SDR_dB": -33.802368816853004,
+        "LSD_dB": 33.28850706194204,
+        "STOI": null,
+        "PESQ_wb": null
+      },
+      "entree_bruitee_vs_propre": {
+        "SI-SDR_dB": 0.025378821882299965,
+        "LSD_dB": 41.644102144104046,
+        "STOI": null,
+        "PESQ_wb": null
+      },
+      "RTF": 50.36212707271372
+    }
+  ]
+}

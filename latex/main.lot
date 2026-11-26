@@ -1,7 +1,12 @@
 \babel@toc {french}{}\relax 
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {1.1}{\ignorespaces Motifs théoriques de la classe $E^+$ sans bruit}}{6}{table.caption.4}%
-\contentsline {table}{\numberline {1.2}{\ignorespaces Motifs théoriques de la classe $E^-$ sans bruit}}{6}{table.caption.5}%
+\contentsline {table}{\numberline {1.1}{\ignorespaces Motifs théoriques de la classe $E^+$ sans bruit}}{7}{table.caption.4}%
+\contentsline {table}{\numberline {1.2}{\ignorespaces Motifs théoriques de la classe $E^-$ sans bruit}}{7}{table.caption.5}%
+\contentsline {table}{\numberline {1.3}{\ignorespaces Coefficients de Wiener pour $\underline c=[1,0.5]^T$, $P=2$ (le script \texttt {partie1\_3\_wiener\_hyperplans.m} vérifie aussi $\underline {w}_{\rm opt}$ par estimation empirique $\hat {\boldsymbol {R}}_x^{-1}\hat {\boldsymbol {p}}$).}}{28}{table.caption.27}%
+\contentsline {table}{\numberline {1.4}{\ignorespaces $\underline c=[1,0.5]^T$, $P=2$. Le max-marge a toujours la plus grande marge, mais sa supériorité en TEB n'apparaît qu'à très fort RSB.}}{31}{table.caption.38}%
+\contentsline {table}{\numberline {1.5}{\ignorespaces TEB simulé ($N=10^5$, graine fixée). Les valeurs exactes dépendent de la graine du générateur.}}{32}{table.caption.41}%
+\contentsline {table}{\numberline {1.6}{\ignorespaces TEB simulés à RSB $=10$~dB ($N=5\cdot 10^4$, $P=M$). « marge W » : marge de l'hyperplan de Wiener (négative = des motifs mal classés même sans bruit).}}{33}{table.caption.43}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Applications de DiffWave et leurs entrées/sorties.}}{30}{table.caption.30}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces Comparaison entre DiffWave et WaveNet.}}{35}{table.caption.37}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Applications de DiffWave et leurs entrées/sorties.}}{39}{table.caption.54}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Comparaison entre DiffWave et WaveNet.}}{44}{table.caption.61}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Résultats du test (je n'ai pas pu télécharger les poids ni exécuter le modèle depuis mon environnement : à remplir avec \texttt {resultats.json}). Attendu : bonne intelligibilité (STOI élevé) en copy-synthesis ; SI-SDR faible même si la qualité perçue est bonne, car un vocodeur ne reproduit pas la phase d'origine ; pas d'amélioration STOI/PESQ pour les entrées bruitées.}}{50}{table.caption.67}%
