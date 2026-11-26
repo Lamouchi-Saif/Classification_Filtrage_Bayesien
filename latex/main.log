@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.11.25)  26 NOV 2026 00:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.11.25)  26 NOV 2026 01:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -980,7 +980,7 @@ Package hyperref Info: Link coloring ON on input line 196.
 \openout4 = `main.out'.
 
 Package babel Info: Main language set to 'french'.
-<universite-de-carthage.png, id=74, 501.875pt x 501.875pt>
+<universite-de-carthage.png, id=98, 501.875pt x 501.875pt>
 File: universite-de-carthage.png Graphic file (type png)
 <use universite-de-carthage.png>
 Package pdftex.def Info: universite-de-carthage.png  used on input line 213.
@@ -1019,7 +1019,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (C:\Users\seif\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-<logo-insat.jpg, id=75, 1174.3875pt x 1174.3875pt>
+<logo-insat.jpg, id=99, 1174.3875pt x 1174.3875pt>
 File: logo-insat.jpg Graphic file (type jpg)
 <use logo-insat.jpg>
 Package pdftex.def Info: logo-insat.jpg  used on input line 220.
@@ -1053,7 +1053,7 @@ Chapitre 1.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
-<figures/01_classes_sans_bruit.png, id=142, 415.5525pt x 394.47375pt>
+<figures/01_classes_sans_bruit.png, id=178, 415.5525pt x 394.47375pt>
 File: figures/01_classes_sans_bruit.png Graphic file (type png)
 <use figures/01_classes_sans_bruit.png>
 Package pdftex.def Info: figures/01_classes_sans_bruit.png  used on input line 113.
@@ -1071,57 +1071,81 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-<figures/02_classes_bruit_variance_0_01.png, id=158, 416.30531pt x 401.24907pt>
+<figures/02_classes_bruit_variance_0_01.png, id=194, 416.30531pt x 401.24907pt>
 File: figures/02_classes_bruit_variance_0_01.png Graphic file (type png)
 <use figures/02_classes_bruit_variance_0_01.png>
 Package pdftex.def Info: figures/02_classes_bruit_variance_0_01.png  used on input line 145.
 (pdftex.def)             Requested size: 377.97006pt x 364.31679pt.
-<figures/03_classes_bruit_variance_0_2.png, id=160, 417.81094pt x 397.485pt>
+<figures/03_classes_bruit_variance_0_2.png, id=196, 417.81094pt x 397.485pt>
 File: figures/03_classes_bruit_variance_0_2.png Graphic file (type png)
 <use figures/03_classes_bruit_variance_0_2.png>
 Package pdftex.def Info: figures/03_classes_bruit_variance_0_2.png  used on input line 158.
 (pdftex.def)             Requested size: 377.97006pt x 359.60124pt.
  [7 <./figures/02_classes_bruit_variance_0_01.png>]
-<figures/04_classes_bruit_variance_1_0.png, id=168, 423.83344pt x 398.99063pt>
+<figures/04_classes_bruit_variance_1_0.png, id=204, 423.83344pt x 398.99063pt>
 File: figures/04_classes_bruit_variance_1_0.png Graphic file (type png)
 <use figures/04_classes_bruit_variance_1_0.png>
 Package pdftex.def Info: figures/04_classes_bruit_variance_1_0.png  used on input line 171.
 (pdftex.def)             Requested size: 377.97006pt x 355.83112pt.
  [8 <./figures/03_classes_bruit_variance_0_2.png>]
-<figures/05_comparaison_niveaux_bruit.png, id=174, 420.06938pt x 402.75468pt>
+<figures/05_comparaison_niveaux_bruit.png, id=210, 420.06938pt x 402.75468pt>
 File: figures/05_comparaison_niveaux_bruit.png Graphic file (type png)
 <use figures/05_comparaison_niveaux_bruit.png>
 Package pdftex.def Info: figures/05_comparaison_niveaux_bruit.png  used on input line 184.
 (pdftex.def)             Requested size: 414.83868pt x 397.74507pt.
- [9 <./figures/04_classes_bruit_variance_1_0.png>]) (seif/partie1_2.tex) (raslen/partie1_3.tex) [10 <./figures/05_comparaison_niveaux_bruit.png>] [11]
+ [9 <./figures/04_classes_bruit_variance_1_0.png>]) (seif/partie1_2.tex [10 <./figures/05_comparaison_niveaux_bruit.png>] [11] [12] [13] [14]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 340.
+ (C:\Users\seif\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmtt.fd
+File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `lmtt' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+Package microtype Info: Character `texttrademark ' is missing
+(microtype)             in font `TS1/lmtt/m/n/12'.
+(microtype)             Ignoring protrusion settings for this character.
+ [15{C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}] [16] [17]
+<figures/part1_2/figure1.png, id=284, 488.42474pt x 409.53pt>
+File: figures/part1_2/figure1.png Graphic file (type png)
+<use figures/part1_2/figure1.png>
+Package pdftex.def Info: figures/part1_2/figure1.png  used on input line 480.
+(pdftex.def)             Requested size: 391.79755pt x 328.51804pt.
+ [18] [19 <./figures/part1_2/figure1.png>] [20] [21] [22]
+<figures/part1_2/figure2.png, id=317, 546.24075pt x 466.74374pt>
+File: figures/part1_2/figure2.png Graphic file (type png)
+<use figures/part1_2/figure2.png>
+Package pdftex.def Info: figures/part1_2/figure2.png  used on input line 702.
+(pdftex.def)             Requested size: 414.83868pt x 354.47253pt.
+ [23] [24 <./figures/part1_2/figure2.png>]) (raslen/partie1_3.tex) [25]
 Chapitre 2.
-(seif/partie2_a.tex) (raslen/partie2_b.tex) (yassine/partie2_c.tex [12
+(seif/partie2_a.tex) (raslen/partie2_b.tex) (yassine/partie2_c.tex [26
 
-] [13]) (raslen/partie2_d.tex) (raslen/partie2_e.tex)
+] [27]) (raslen/partie2_d.tex) (raslen/partie2_e.tex)
 
 Package caption Warning: Unused \captionsetup[sub] on input line 62.
 See the caption package documentation for explanation.
 
-[14] (main.aux)
+[28] (main.aux)
  ***********
 LaTeX2e <2026-11-01>
 L3 programming layer <2026-09-09>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 613F57DE00C8346A61A0BA2D450E6F84;4197.
+(rerunfilecheck)             Checksum: A35FDFE235615E3CA2658C0484CF8A19;5855.
  ) 
 Here is how much of TeX's memory you used:
- 45857 strings out of 467309
- 1075517 string characters out of 5403278
- 1577456 words of memory out of 5000000
- 74446 multiletter control sequences out of 15000+600000
- 680933 words of font info for 120 fonts, out of 8000000 for 9000
+ 46055 strings out of 467309
+ 1078554 string characters out of 5403278
+ 1577715 words of memory out of 5000000
+ 74522 multiletter control sequences out of 15000+600000
+ 698081 words of font info for 149 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,12n,107p,1044b,1180s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,12n,107p,1044b,1301s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/Users/seif/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (15 pages, 464096 bytes).
+Output written on main.pdf (29 pages, 931507 bytes).
 PDF statistics:
- 284 PDF objects out of 1000 (max. 8388607)
- 48 named destinations out of 1000 (max. 500000)
- 29368 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 446 PDF objects out of 1000 (max. 8388607)
+ 114 named destinations out of 1000 (max. 500000)
+ 40178 words of extra memory for PDF output out of 42996 (max. 10000000)
 
