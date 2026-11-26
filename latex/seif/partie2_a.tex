@@ -1,0 +1,643 @@
+
+%=========================================================
+% PARTIE 2.a : ETUDE DE L'ARCHITECTURE DIFFWAVE
+% ! DEPRECATED : UTILISER PARTIE2_AV2
+%=========================================================
+
+\section{Étude de l'architecture DNN DiffWave}
+
+\subsection{Présentation générale de DiffWave}
+
+DiffWave (\textit{Diffusion Model for Audio Synthesis}) est un
+modèle génératif profond basé sur les modèles probabilistes
+de diffusion. Il a été proposé par Zhifeng Kong et ses
+collaborateurs dans l'article intitulé
+\textit{DiffWave: A Versatile Diffusion Model for Audio Synthesis},
+publié à la conférence ICLR en 2021.
+
+L'objectif principal de DiffWave est de générer des formes
+d'onde audio de haute qualité à partir d'un bruit gaussien.
+Contrairement aux modèles génératifs autorégressifs classiques,
+DiffWave utilise un processus progressif de débruitage pour
+transformer un signal initialement aléatoire en un signal audio
+structuré.
+
+Le modèle repose sur deux processus complémentaires :
+
+\begin{itemize}
+    \item \textbf{Le processus de diffusion (Forward Process)} :
+    il consiste à ajouter progressivement du bruit gaussien
+    à un signal audio réel jusqu'à obtenir un signal proche
+    d'un bruit blanc.
+
+    \item \textbf{Le processus inverse (Reverse Process)} :
+    il consiste à apprendre à supprimer progressivement
+    le bruit afin de reconstruire un signal audio cohérent.
+\end{itemize}
+
+Le processus inverse est appris à l'aide d'un réseau de
+neurones profond qui estime le bruit présent dans le signal
+à chaque étape de diffusion.
+
+DiffWave est un modèle non autorégressif : il ne génère pas
+les échantillons audio un par un, mais traite une forme
+d'onde complète à chaque étape du processus de débruitage.
+
+\subsection{Applications de DiffWave}
+
+L'article original présente trois principales applications
+de DiffWave dans le domaine de la génération audio.
+
+\subsubsection{Vocodage neuronal (Neural Vocoding)}
+
+Le vocodage neuronal consiste à transformer une représentation
+spectrale de la parole en une forme d'onde audio directement
+écoutable.
+
+Dans cette application, DiffWave reçoit comme entrée un
+spectrogramme Mel, généralement produit par un système
+de synthèse vocale à partir d'un texte.
+
+Le spectrogramme Mel fournit des informations temporelles
+et fréquentielles sur le signal de parole. Il sert de
+conditionnement au modèle afin de guider la génération
+de la forme d'onde.
+
+\textbf{Entrée :}
+\begin{itemize}
+    \item Un spectrogramme Mel correspondant à la parole
+    à synthétiser ;
+    \item Un signal initial constitué de bruit gaussien
+    pendant le processus de génération.
+\end{itemize}
+
+\textbf{Sortie :}
+\begin{itemize}
+    \item Une forme d'onde audio reconstruite, représentant
+    le signal de parole correspondant au spectrogramme Mel.
+\end{itemize}
+
+Cette application permet notamment de produire une parole
+naturelle à partir des caractéristiques spectrales fournies
+par un système de synthèse vocale.
+
+\subsubsection{Génération conditionnée par une classe
+(Class-Conditional Generation)}
+
+DiffWave peut également générer des signaux audio en
+fonction d'une information de classe fournie au modèle.
+
+Cette information peut représenter, par exemple, une
+identité de locuteur ou une catégorie de signal.
+
+Le modèle reçoit un bruit gaussien ainsi qu'une étiquette
+qui indique le type de signal à générer. Cette information
+est utilisée pour orienter le processus de génération.
+
+\textbf{Entrée :}
+\begin{itemize}
+    \item Un bruit gaussien initial ;
+    \item Une étiquette de classe, par exemple un identifiant
+    de locuteur.
+\end{itemize}
+
+\textbf{Sortie :}
+\begin{itemize}
+    \item Une forme d'onde audio appartenant à la classe
+    spécifiée.
+\end{itemize}
+
+Le conditionnement permet ainsi de contrôler certaines
+caractéristiques du signal généré.
+
+\subsubsection{Génération non conditionnée
+(Unconditional Generation)}
+
+Dans cette application, DiffWave génère un signal audio
+sans recevoir d'information conditionnelle externe.
+
+Le modèle commence directement avec un bruit gaussien
+aléatoire et applique le processus inverse de diffusion
+pour produire une forme d'onde audio.
+
+\textbf{Entrée :}
+\begin{itemize}
+    \item Un bruit gaussien aléatoire.
+\end{itemize}
+
+\textbf{Sortie :}
+\begin{itemize}
+    \item Une forme d'onde audio générée par le modèle,
+    sans conditionnement externe.
+\end{itemize}
+
+Cette approche permet au modèle d'apprendre la distribution
+des signaux audio présents dans sa base d'apprentissage
+et de générer de nouveaux exemples présentant des
+caractéristiques similaires.
+
+\subsubsection{Synthèse des applications}
+
+Le tableau suivant résume les trois applications étudiées
+dans l'article original :
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{3.2cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{Application} &
+\textbf{Entrée du modèle} &
+\textbf{Sortie du modèle} \\
+\hline
+
+Vocodage neuronal &
+Bruit gaussien et spectrogramme Mel &
+Forme d'onde audio correspondant au spectrogramme Mel \\
+\hline
+
+Génération conditionnée &
+Bruit gaussien et étiquette de classe &
+Forme d'onde correspondant à la classe spécifiée \\
+\hline
+
+Génération non conditionnée &
+Bruit gaussien uniquement &
+Nouvelle forme d'onde audio générée sans conditionnement \\
+\hline
+\end{tabular}
+\caption{Principales applications de DiffWave et leurs
+entrées et sorties.}
+\label{tab:diffwave_applications}
+\end{table}
+
+\subsection{Principe de l'approche d'apprentissage de DiffWave}
+
+L'apprentissage de DiffWave repose sur le principe des
+modèles probabilistes de diffusion. Il s'effectue en deux
+phases principales : un processus direct qui ajoute du bruit
+aux données réelles et un processus inverse qui apprend
+à reconstruire ces données.
+
+\subsubsection{Processus direct : diffusion (Forward Process)}
+
+Le processus de diffusion consiste à ajouter progressivement
+du bruit gaussien à un signal audio réel.
+
+On note le signal audio original par :
+
+\[
+x_0 \in \mathbb{R}^{L}
+\]
+
+où $L$ représente le nombre d'échantillons du signal.
+
+À chaque étape $t$, un bruit gaussien est ajouté au signal
+précédent. Cette opération est définie par :
+
+\[
+q(x_t \mid x_{t-1}) =
+\mathcal{N}\left(
+x_t;
+\sqrt{1-\beta_t}\,x_{t-1},
+\beta_t I
+\right)
+\]
+
+où :
+
+\begin{itemize}
+    \item $x_t$ représente le signal après l'étape de diffusion
+    $t$ ;
+    \item $\beta_t$ est un paramètre qui contrôle la quantité
+    de bruit ajoutée à cette étape ;
+    \item $I$ représente la matrice identité ;
+    \item $\mathcal{N}$ désigne une distribution gaussienne.
+\end{itemize}
+
+Les valeurs de $\beta_t$ suivent un calendrier de variance
+(\textit{variance schedule}) défini avant l'apprentissage.
+
+En répétant cette opération, le signal original perd
+progressivement ses caractéristiques et devient de plus
+en plus bruité.
+
+Après un nombre suffisamment élevé d'étapes $T$, le signal
+$x_T$ se rapproche d'un bruit gaussien standard :
+
+\[
+x_T \sim \mathcal{N}(0,I).
+\]
+
+Une propriété importante de ce processus est qu'il est
+possible de calculer directement le signal bruité à une
+étape quelconque $t$, sans exécuter toutes les étapes
+intermédiaires.
+
+En posant :
+
+\[
+\alpha_t=1-\beta_t
+\]
+
+et
+
+\[
+\overline{\alpha}_t=
+\prod_{s=1}^{t}\alpha_s,
+\]
+
+on obtient :
+
+\[
+\boxed{
+x_t =
+\sqrt{\overline{\alpha}_t}\,x_0
++
+\sqrt{1-\overline{\alpha}_t}\,\epsilon
+}
+\]
+
+avec :
+
+\[
+\epsilon\sim\mathcal{N}(0,I).
+\]
+
+Cette équation permet de générer directement une version
+bruitée du signal original pour une étape de diffusion
+choisie aléatoirement.
+
+\subsubsection{Processus inverse : débruitage
+(Reverse Process)}
+
+Le processus inverse représente la phase de génération
+du signal audio.
+
+Son objectif est de partir d'un bruit gaussien $x_T$
+et de reconstruire progressivement un signal audio
+cohérent en supprimant le bruit ajouté pendant le
+processus direct.
+
+Le modèle apprend une distribution conditionnelle
+de transition :
+
+\[
+p_{\theta}(x_{t-1}\mid x_t)
+\]
+
+qui permet de passer du signal bruité $x_t$ au signal
+moins bruité $x_{t-1}$.
+
+Cette distribution est modélisée par :
+
+\[
+p_{\theta}(x_{t-1}\mid x_t)
+=
+\mathcal{N}
+\left(
+x_{t-1};
+\mu_{\theta}(x_t,t),
+\sigma_t^2 I
+\right)
+\]
+
+où $\mu_{\theta}$ représente la moyenne prédite par
+le modèle et $\sigma_t$ son écart-type.
+
+Le réseau de neurones $\epsilon_{\theta}$ apprend à
+estimer le bruit présent dans le signal reçu.
+
+La moyenne de la distribution inverse est alors
+paramétrée par :
+
+\[
+\boxed{
+\mu_{\theta}(x_t,t)=
+\frac{1}{\sqrt{\alpha_t}}
+\left(
+x_t-
+\frac{\beta_t}
+{\sqrt{1-\overline{\alpha}_t}}
+\epsilon_{\theta}(x_t,t)
+\right)
+}
+\]
+
+À chaque étape, le modèle utilise cette estimation
+pour reconstruire un signal moins bruité.
+
+Le processus est répété de $t=T$ jusqu'à $t=1$.
+Le résultat final est le signal généré $x_0$.
+
+\subsubsection{Illustration des deux processus}
+
+Le fonctionnement général de DiffWave peut être résumé
+par le schéma suivant :
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.88\textwidth}
+\centering
+
+\textbf{Processus direct : ajout progressif de bruit}
+
+\vspace{0.3cm}
+
+Signal audio réel $x_0$
+
+$\Downarrow$
+
+Signal légèrement bruité $x_1$
+
+$\Downarrow$
+
+Signal de plus en plus bruité $x_2,\ldots,x_{T-1}$
+
+$\Downarrow$
+
+Bruit gaussien $x_T$
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Processus inverse : génération par débruitage}
+
+\vspace{0.3cm}
+
+Bruit gaussien $x_T$
+
+$\Downarrow$
+
+Estimation et suppression progressive du bruit
+
+$\Downarrow$
+
+Signaux intermédiaires $x_{T-1},\ldots,x_1$
+
+$\Downarrow$
+
+Signal audio généré $x_0$
+
+\end{minipage}
+}
+\end{center}
+
+Le processus direct est utilisé pour construire des
+exemples bruités pendant l'apprentissage, tandis que
+le processus inverse est appris par le réseau de neurones
+et utilisé pour générer de nouveaux signaux audio.
+
+\subsection{Apprentissage du réseau de neurones}
+
+Pendant l'apprentissage, le modèle reçoit un signal
+audio original $x_0$, une étape de diffusion $t$ et
+un bruit gaussien aléatoire $\epsilon$.
+
+À partir de ces éléments, il construit un signal bruité :
+
+\[
+x_t =
+\sqrt{\overline{\alpha}_t}\,x_0
++
+\sqrt{1-\overline{\alpha}_t}\,\epsilon.
+\]
+
+Le réseau de neurones reçoit alors $x_t$ et l'indice
+de diffusion $t$. Son objectif est de prédire le bruit
+$\epsilon$ qui a été ajouté au signal.
+
+La prédiction est notée :
+
+\[
+\epsilon_{\theta}(x_t,t).
+\]
+
+La fonction de coût utilisée par DiffWave est une erreur
+quadratique entre le bruit réel et le bruit estimé :
+
+\[
+\boxed{
+\mathcal{L}(\theta)=
+\mathbb{E}_{x_0,\epsilon,t}
+\left[
+\left\|
+\epsilon-
+\epsilon_{\theta}
+\left(
+\sqrt{\overline{\alpha}_t}x_0+
+\sqrt{1-\overline{\alpha}_t}\epsilon,
+t
+\right)
+\right\|_2^2
+\right]
+}
+\]
+
+L'objectif de l'apprentissage est de minimiser cette
+fonction de coût en ajustant les paramètres $\theta$
+du réseau.
+
+En pratique, l'étape de diffusion $t$ est choisie
+aléatoirement parmi les étapes possibles. Le modèle
+apprend ainsi à estimer le bruit pour différents niveaux
+de dégradation du signal.
+
+Cette méthode permet d'entraîner le réseau à effectuer
+le débruitage à différents niveaux, sans devoir lui
+fournir séparément un réseau discriminateur ou un
+encodeur supplémentaire.
+
+\subsection{Conditionnement dans DiffWave}
+
+Le conditionnement consiste à fournir au modèle une
+information supplémentaire afin de contrôler ou
+d'orienter le signal audio généré.
+
+Dans DiffWave, le réseau peut fonctionner sans
+conditionnement ou avec une information conditionnelle.
+
+On distingue principalement deux types de conditionnement.
+
+\subsubsection{Conditionnement local (Local Conditioning)}
+
+Le conditionnement local fournit une information qui
+varie dans le temps et qui est alignée avec les
+échantillons du signal audio.
+
+Dans le cas du vocodage neuronal, cette information
+correspond au spectrogramme Mel.
+
+Le spectrogramme Mel est d'abord mis à l'échelle
+temporelle afin d'avoir une longueur compatible avec
+celle de la forme d'onde.
+
+Il est ensuite injecté dans les couches du réseau
+afin de guider la génération du signal audio.
+
+Ainsi, le modèle ne génère pas une parole quelconque :
+il produit une forme d'onde qui respecte les
+caractéristiques temporelles et spectrales du
+spectrogramme fourni.
+
+\subsubsection{Conditionnement global (Global Conditioning)}
+
+Le conditionnement global fournit une information
+qui caractérise l'ensemble du signal plutôt que chaque
+instant individuellement.
+
+Il peut s'agir, par exemple, d'un identifiant de
+locuteur ou d'une étiquette de classe.
+
+Cette information est transformée en représentation
+numérique à l'aide d'une couche d'embedding, puis
+transmise au réseau.
+
+Elle permet d'orienter la génération vers une catégorie
+ou un locuteur particulier.
+
+\subsubsection{Différence entre diffusion et conditionnement}
+
+Il est important de distinguer les deux notions :
+
+\begin{itemize}
+    \item La \textbf{diffusion} décrit le mécanisme
+    mathématique d'ajout progressif de bruit puis de
+    suppression de ce bruit.
+
+    \item Le \textbf{conditionnement} représente
+    l'information supplémentaire qui guide la génération
+    du signal vers un résultat souhaité.
+\end{itemize}
+
+La diffusion répond donc à la question :
+\textit{comment le signal est-il progressivement généré ?}
+
+Le conditionnement répond à la question :
+\textit{quel type de signal le modèle doit-il générer ?}
+
+\subsection{Différences entre DiffWave et les vocodeurs
+classiques tels que WaveNet}
+
+WaveNet est un modèle génératif autorégressif qui
+génère les échantillons audio de manière séquentielle.
+Chaque nouvel échantillon dépend des échantillons
+précédemment générés.
+
+DiffWave adopte une approche différente : il utilise
+un processus de diffusion probabiliste pour générer
+une forme d'onde à partir d'un bruit initial.
+
+Bien que son architecture utilise également des
+convolutions dilatées et des connexions résiduelles,
+son mécanisme de génération n'est pas autorégressif.
+
+Les principales différences sont présentées dans
+le tableau suivant.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{3.1cm}|p{5.1cm}|p{5.1cm}|}
+\hline
+\textbf{Critère} &
+\textbf{WaveNet} &
+\textbf{DiffWave} \\
+\hline
+
+Principe de génération &
+Génération autorégressive &
+Génération par diffusion probabiliste \\
+\hline
+
+Ordre de génération &
+Échantillon par échantillon &
+Signal complet traité à chaque étape inverse \\
+\hline
+
+Dépendance temporelle &
+Convolutions causales &
+Convolutions dilatées bidirectionnelles \\
+\hline
+
+Entrée initiale &
+Contexte des échantillons précédents &
+Bruit gaussien initial \\
+\hline
+
+Mécanisme principal &
+Prédiction du prochain échantillon &
+Estimation et suppression progressive du bruit \\
+\hline
+
+Conditionnement &
+Caractéristiques locales ou linguistiques &
+Conditionnement local ou global possible \\
+\hline
+
+Parallélisation &
+Génération séquentielle &
+Calcul parallèle des échantillons à chaque étape \\
+\hline
+
+Temps de génération &
+Peut être important pour les longues formes d'onde &
+Réduit grâce à un nombre limité d'étapes de diffusion \\
+\hline
+\end{tabular}
+\caption{Comparaison entre les approches de génération
+audio de WaveNet et DiffWave.}
+\label{tab:diffwave_wavenet}
+\end{table}
+
+Dans l'article original, les auteurs rapportent que
+DiffWave atteint un score MOS de 4.44, contre 4.43
+pour le vocodeur WaveNet utilisé dans leur comparaison.
+Le score MOS (\textit{Mean Opinion Score}) est une
+mesure subjective de la qualité perçue de la parole.
+
+Les auteurs montrent également que DiffWave peut
+synthétiser les formes d'onde beaucoup plus rapidement
+que WaveNet dans leur configuration expérimentale.
+
+Il faut toutefois noter que ces résultats dépendent
+des configurations expérimentales et ne signifient
+pas que DiffWave est systématiquement plus rapide
+que tous les vocodeurs existants.
+
+\subsection{Conclusion}
+
+DiffWave est un modèle génératif audio basé sur les
+modèles probabilistes de diffusion. Son fonctionnement
+repose sur un processus direct d'ajout de bruit et un
+processus inverse de débruitage appris par un réseau
+de neurones profond.
+
+Sa capacité à fonctionner avec ou sans conditionnement
+lui permet de prendre en charge plusieurs applications,
+notamment le vocodage neuronal, la génération
+conditionnée par une classe et la génération non
+conditionnée.
+
+Contrairement à WaveNet, qui génère les échantillons
+de manière autorégressive et séquentielle, DiffWave
+utilise un processus de génération non autorégressif
+reposant sur plusieurs étapes successives de débruitage.
+
+Cette approche permet de produire des formes d'onde
+audio de haute qualité tout en offrant une alternative
+intéressante aux vocodeurs autorégressifs classiques.
+
+%=========================================================
+% REFERENCE BIBLIOGRAPHIQUE
+%=========================================================
+
+% \begin{thebibliography}{9}
+
+% \bibitem{kong2021diffwave}
+% Z. Kong, W. Ping, J. Huang, K. Zhao et B. Catanzaro,
+% \textit{DiffWave: A Versatile Diffusion Model for Audio Synthesis},
+% International Conference on Learning Representations (ICLR), 2021.
+
+% \end{thebibliography}
